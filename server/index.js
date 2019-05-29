@@ -1,5 +1,7 @@
 const express = require('express');
+const CORS = require('cors');
 const app  = express();
+const path = require('path');
 
 // 1.) Client sends a /GET to /home:
   // a.) Proxy server sends back an html file;
@@ -13,21 +15,30 @@ const app  = express();
   // e.) The proxy server's API responds to the client; 
   // f.) The client generates a new html;
 
+app.use(CORS());
 app.use(express.static(`${__dirname}/../client/dist`));
 
+app.get('/restaurants/:id', (req, res) => {
+  res.sendFile(path.join(__dirname + '/../client/dist/index.html'))
+})
+
 // Eugenia's module: (3000)
-app.get('/1/photos', (req, res) => {
-  req.redirect('/api/restaurants/1/photos');
+app.get('/restaurants/:id/photos', (req, res) => {
+  // extract the id with request.params.id
+  var id = req.params.id
+  res.redirect(`http://localhost:3000/api/restaurants/${id}/photos`);
 });
 
 // My module: (port 3001)
-app.get('/:id/reviews', (req, res) => {
-  req.redirect('/api/restaurants/:id/reviews');
+app.get('/restaurants/:id/reviews', (req, res) => {
+  var id = req.params.id
+  req.redirect(`http://localhost:3001/api/restaurants/${id}/reviews`);
 });
 
 // Rafe's module: (port 3002)
-app.get('/:id/info/', (req, res) => {
-  req.redirect('/api/restaurants/:id/info/');
+app.get('/restaurants/:id/info/', (req, res) => {
+  var id = req.params.id
+  req.redirect(`http://localhost:3002/api/restaurants/${id}/info`);
 });
 
 // Erik's module: (port 3003)
