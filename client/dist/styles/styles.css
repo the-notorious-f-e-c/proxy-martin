@@ -4,28 +4,26 @@ body {
   padding: 0;
 }
 
-@media (min-width: 700px) {
-  #info {
-    margin: 0 auto;
-    clear: right;
-  }
-}
-
 #page {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
 
-#review {
+#allReviews {
   margin: 32px;
   margin-right: 0px;
-  display:inline-block;
-  background-color: white;
+  height: 100%;
+  display: inline-block;
   flex: 1 1 50%;
+  min-width: 300px; 
 }
 
-#infos {
+#reviews {
+  margin-bottom: 32px;
+}
+
+#info {
   display: inline-block;
   flex: 1 1 20%;
 }
